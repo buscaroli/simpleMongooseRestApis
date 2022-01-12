@@ -16,6 +16,5 @@
     "express": "^4.17.2",
     "mongodb": "^4.3.0",
     "mongoose": "^6.1.6"
-  },
-  "type": "module"
+  }
 }

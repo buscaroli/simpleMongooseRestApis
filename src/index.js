@@ -1,16 +1,12 @@
-import express from 'express'
-import "./db/mongoose.js"
-import Note from './models/note.js'
-const noteRouter = import('./routers/note.js')
+const express = require('express')
+require('./db/mongoose')
+const Note = require ('./models/note')
 
+const noteRouter = require('./routers/note')
 const port = process.env.PORT || 3000
-
 const app = express()
-
 app.use(express.json())
-
-
-
+app.use(noteRouter)
 
 
 // Starting server
