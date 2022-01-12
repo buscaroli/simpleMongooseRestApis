@@ -1,0 +1,21 @@
+{
+  "name": "simplemongooserestapis",
+  "version": "1.0.0",
+  "description": "Refreshing what I know about how to set up a server for APIs using nodeJS and mongoDB with Mongoose.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "mabus",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongodb": "^4.3.0",
+    "mongoose": "^6.1.6"
+  },
+  "type": "module"
+}
