@@ -64,20 +64,52 @@ router.get('/notes/:id', (req, res) => {
 //      FAILURE: http --raw  '{"title": "Updated Note", "text": "This is my Updated note"}' 
 //          PATCH localhost:3000/notes/12345  (400 Bad Request)
 
-router.patch('/notes/:id', (req, res) => {
+router.patch('/notes/:id', async (req, res) => {
     const _id = req.params.id
 
-    Note.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
-        .then(note => {
-            if (!note) {
-                return res.status(404).send()
-            }
-            res.send(note)
-        })
-        .catch(err => {
-            res.status(400).send(err)
-        })
+    const updates =  Object.keys(req.body)
+    const allowedUpdates = ['title', 'text', 'read']
+    const isValidOperation = updates.every(update => {
+        return allowedUpdates.includes(update)
+    })
+
+    if (!isValidOperation) {
+        return res.status(400).send({ err: 'Trying to update protected field(s).'})
+    }
+
+    try {
+        const note = await Note.findById(_id)
+
+        updates.forEach(update => note[update] = req.body[update])
+
+        await note.save()
+
+        if (!note) {
+            return res.status(404).send()
+        }
+        res.send(note)
+
+    } catch (err) {
+        res.status(400).send(err)
+    }
 })
+
+// !!!! findByIdAndUpdate wouldn't work with middleware if needed !!!!
+//
+// router.patch('/notes/:id', (req, res) => {
+//     const _id = req.params.id
+
+//     Note.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
+//         .then(note => {
+//             if (!note) {
+//                 return res.status(404).send()
+//             }
+//             res.send(note)
+//         })
+//         .catch(err => {
+//             res.status(400).send(err)
+//         })
+// })
 
 // CRUD: DELETE one note
 //      SUCCESS: http DELETE localhost:3000/notes/61dec21f9da8ad3e85a518b3 )<- id from database)

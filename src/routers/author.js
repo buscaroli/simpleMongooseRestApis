@@ -64,19 +64,63 @@ router.get('/authors/:id', (req, res) => {
 //      SUCCESS: http --raw  '{"name": "Matteo"}' PATCH localhost:3000/authors/61dffe7b495f666c8361e055 ( <- id from database)
 //      FAILURE: http --raw  '{"name": "Matteo"}' PATCH localhost:3000/authors/61dffe7b495f666c8361e05A (last char changed)
 //      FAILURE: http --raw  '{"name": "Matteo"}' PATCH localhost:3000/authors/12345
-router.patch('/authors/:id', (req, res) => {
+router.patch('/authors/:id', async (req, res) => {
     const _id = req.params.id
+    
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'email', 'age', 'password']
+    const isValidOperation = updates.every(update => allowedUpdates.includes(update))
 
-    Author.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
-        .then(author => {
-            if (!author) {
-                return res.status(404).send()
-            }
-            res.send(author)
+    if (!isValidOperation) { 
+        return res.status(400).send({ error: 'Trying to update protected field(s).' })
+    }
+    
+    try {
+        const author = await Author.findById(_id)
+
+        updates.forEach(update => {
+            author[update] = req.body[update]
         })
-        .catch(err => {
-            res.status(500).send(err)
-        })
+
+        await author.save()
+
+        if (!author)  {
+            return res.status(404).send()
+        }
+        res.send(author)
+
+    } catch (err) {
+        res.status(400).send(err)
+    }
+
+    // 2. This version works but doesn't send back the updated author
+    // 
+    // Author.findById(_id)
+    //     .then(author => {
+    //         if (!author) {
+    //             return res.status(404).send()
+    //         }
+    //         Author.updateOne({ _id: author._id }, req.body, { new: true, runValidators: true } )
+    //             .then(updatedAuthor => {
+    //                 res.send()
+    //             })
+    //     })
+    //     .catch(err => {
+    //         res.status(500).send(err)
+    //     })
+
+    // 1. !!!! findByIdAndUpdate doesn't work with Moddleware !!!!
+    // 
+    // Author.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
+    //     .then(author => {
+    //         if (!author) {
+    //             return res.status(404).send()
+    //         }
+    //         res.send(author)
+    //     })
+    //     .catch(err => {
+    //         res.status(500).send(err)
+    //     })
 })
 
 // Delete One

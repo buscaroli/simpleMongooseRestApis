@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 const validator = require('validator')
 const { validate } = require('./note')
+const bcrypt = require('bcrypt')
 
 const authorSchema = new Schema({
     name: {
@@ -43,6 +44,16 @@ const authorSchema = new Schema({
         type: Date,
         default: Date.now()
     }
+})
+
+// Middleware that encrypt the password BEFORE it's saved to the database
+authorSchema.pre('save', async function(next) {
+    // this refers to the author being processed
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 8)
+    }
+
+    next() // we need next because this is an async function
 })
 
 const Author = mongoose.model('Author', authorSchema)
