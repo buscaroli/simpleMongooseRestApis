@@ -1,13 +1,14 @@
 const express = require('express')
 require('./db/mongoose')
-const Note = require ('./models/note')
-
 const noteRouter = require('./routers/note')
+const authorRouter = require('./routers/author')
+
 const port = process.env.PORT || 3000
+
 const app = express()
 app.use(express.json())
 app.use(noteRouter)
-
+app.use(authorRouter)
 
 // Starting server
 app.listen(port, () => {

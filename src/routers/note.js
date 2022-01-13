@@ -81,21 +81,22 @@ router.patch('/notes/:id', (req, res) => {
 
 // CRUD: DELETE one note
 //      SUCCESS: http DELETE localhost:3000/notes/61dec21f9da8ad3e85a518b3 )<- id from database)
+//      FAILURE: Do the above again for a 404
 //      FAILURE: http DELETE localhost:3000/notes/12345 
 router.delete('/notes/:id', (req, res) => {
-let _id = req.params.id 
+    let _id = req.params.id 
 
-Note.findByIdAndDelete({_id})
-    .then(note => {
-        if (!note) {
-            return res.status(404).send()
-        }
-        res.send(note)
+    Note.findByIdAndDelete({_id})
+        .then(note => {
+            if (!note) {
+                return res.status(404).send()
+            }
+            res.send(note)
+        })
+        .catch(err => {
+            res.status(500).send(err)
+        })
     })
-    .catch(err => {
-        res.status(500).send(err)
-    })
-})
 
 
 module.exports = router
