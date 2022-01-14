@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 const { Schema } = mongoose
 const validator = require('validator')
 const { validate } = require('./note')
@@ -17,7 +18,9 @@ const authorSchema = new Schema({
     },
     email: {
         type: String,
+        unique: true,
         required: true,
+        lowercase: true,
         trim: true,
         validate(value){
             if (!validator.isEmail(value)) {
@@ -45,8 +48,30 @@ const authorSchema = new Schema({
         default: Date.now()
     }
 })
+// without the following plugin the 'unique' field of Mongoose's Schema
+// is ignored as per Jan 2022
+authorSchema.plugin(uniqueValidator)
 
-// Middleware that encrypt the password BEFORE it's saved to the database
+// Static Middleware that finds an author by email and password
+// Used for authorization (login)
+authorSchema.statics.findByEmailAndPassword = async (email, password) => {
+    const author = await Author.findOne({ email })
+
+    if (!author) {
+        throw new Error('Unable to login.')
+    }
+
+    const isMatch = await bcrypt.compare(password, author.password)
+
+    if (!isMatch) {
+        throw new Error('Unable to login.')
+    }
+
+    return author
+}
+
+
+// Middleware that hashes the password BEFORE it's saved to the database
 authorSchema.pre('save', async function(next) {
     // this refers to the author being processed
     if (this.isModified('password')) {
