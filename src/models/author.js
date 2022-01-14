@@ -4,6 +4,7 @@ const { Schema } = mongoose
 const validator = require('validator')
 const { validate } = require('./note')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const authorSchema = new Schema({
     name: {
@@ -46,11 +47,29 @@ const authorSchema = new Schema({
     joined: {
         type: Date,
         default: Date.now()
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 })
 // without the following plugin the 'unique' field of Mongoose's Schema
 // is ignored as per Jan 2022
-authorSchema.plugin(uniqueValidator)
+// authorSchema.plugin(uniqueValidator)
+
+// Virtual Method, callable on an instance of Author
+authorSchema.methods.generateJWToken = async function() {
+    
+    const token = jwt.sign({ _id: this._id.toString() }, 'mypassword')
+    
+    this.tokens = this.tokens.concat({ token: token })
+    await this.save()
+
+    return token
+}
+
 
 // Static Middleware that finds an author by email and password
 // Used for authorization (login)

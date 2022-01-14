@@ -5,6 +5,21 @@ const router = new express.Router()
 
 
 
+// AUTHORIZATION
+// HTTPie:
+//      SUCCESS: http --raw  '{"email": "julian@email.com", "password": "qwe123"}' POST localhost:3000/authors/login (<- info from DB)
+//      FAILURE: http --raw  '{"email": "julian@email.com", "password": "qwe"}' POST localhost:3000/authors/login (alter mail or pw)
+router.post('/authors/login', async (req, res) => {
+    try {
+        const author = await Author.findByEmailAndPassword(req.body.email, req.body.password)
+        const token = await author.generateJWToken()
+        res.send({ author, token })
+    } catch (err) {
+        res.status(400).send(err)
+    }
+    
+})
+
 // CREATE
 // HTTPie:
 //      SUCCESS: http --raw '{"name": "Matt", "email": "matt@email.com", "age": 43, "password": "qwertyuiop"}' POST localhost:3000/authors
@@ -141,20 +156,6 @@ router.delete('/authors/:id', (req, res) => {
         .catch(err => {
             res.status(500).send(err)
         })
-})
-
-// AUTHORIZATION
-// HTTPie:
-//      SUCCESS: http --raw  '{"email": "julian@email.com", "password": "qwe123"}' POST localhost:3000/authors/login (<- info from DB)
-//      FAILURE: http --raw  '{"email": "julian@email.com", "password": "qwe"}' POST localhost:3000/authors/login (alter mail or pw)
-router.post('/authors/login', async (req, res) => {
-    try {
-        const author = await Author.findByEmailAndPassword(req.body.email, req.body.password)
-        res.send(author)
-    } catch (err) {
-        res.status(400).send()
-    }
-    
 })
 
 
