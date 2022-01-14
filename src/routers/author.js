@@ -1,6 +1,6 @@
 const express = require('express')
 const Author = require('../models/author')
-
+const auth = require('../middleware/auth')
 const router = new express.Router()
 
 
@@ -20,7 +20,7 @@ router.post('/authors/login', async (req, res) => {
     
 })
 
-// CREATE
+// CREATE (SIGN UP)
 // HTTPie:
 //      SUCCESS: http --raw '{"name": "Matt", "email": "matt@email.com", "age": 43, "password": "qwertyuiop"}' POST localhost:3000/authors
 //      FAILURE: http --raw '{"name": "MB", "email": "mb@edc.co", "age": 43, "password": "qwaszx"}' POST localhost:3000/authors
@@ -40,17 +40,8 @@ router.post('/authors', (req, res) => {
 // READ all
 // HTTPie:
 //      SUCCESS: http GET localhost:3000/authors
-router.get('/authors', (req, res) => {
-    Author.find({})
-    .then(authors => {
-        if (authors.length != 0) {
-            return res.send(authors)
-        }
-        res.status(404).send()
-    })
-    .catch(err => {
-        res.status(500).send(err)
-    })
+router.get('/authors/me', auth, async (req, res) => {
+    res.send(req.author)
 })
 
 // READ one
