@@ -55,5 +55,15 @@ content-type: application/json
 
 GET http://localhost:3000/authors/me HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUxOTg2OGZjOTEzZDIyYjJhZTE3MGQiLCJpYXQiOjE2NDIxODk4OTR9.SJ4QwI4lkh-MPK5cygTH6Xouk_Mlz0xp_bDmoekjYWU
+
+### LOGOUT
+POST http://127.0.0.1:3000/authors/logout
+content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUxOTg2OGZjOTEzZDIyYjJhZTE3MGQiLCJpYXQiOjE2NDIxNzUyMDF9.ESl-xcFjuR-iaoZvAlW6THk7FI2-NP4wXwvjoAiv-bA
 
+### LOGOUT EVERYWHERE
+
+POST http://127.0.0.1:3000/authors/logoutAll
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUxOTg2OGZjOTEzZDIyYjJhZTE3MGQiLCJpYXQiOjE2NDIxOTA2MTV9.kbDHWk8F4n0j_P7GvCmh9DVNXC18RCKIFqjDmPElxxA

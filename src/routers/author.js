@@ -5,10 +5,7 @@ const router = new express.Router()
 
 
 
-// AUTHORIZATION
-// HTTPie:
-//      SUCCESS: http --raw  '{"email": "julian@email.com", "password": "qwe123"}' POST localhost:3000/authors/login (<- info from DB)
-//      FAILURE: http --raw  '{"email": "julian@email.com", "password": "qwe"}' POST localhost:3000/authors/login (alter mail or pw)
+// LOGIN (Authentication)
 router.post('/authors/login', async (req, res) => {
     try {
         const author = await Author.findByEmailAndPassword(req.body.email, req.body.password)
@@ -20,7 +17,7 @@ router.post('/authors/login', async (req, res) => {
     
 })
 
-// CREATE (SIGN UP)
+// SIGN UP (CREATE Author)
 // HTTPie:
 //      SUCCESS: http --raw '{"name": "Matt", "email": "matt@email.com", "age": 43, "password": "qwertyuiop"}' POST localhost:3000/authors
 //      FAILURE: http --raw '{"name": "MB", "email": "mb@edc.co", "age": 43, "password": "qwaszx"}' POST localhost:3000/authors
@@ -34,6 +31,33 @@ router.post('/authors', (req, res) => {
         .catch(err => {
             res.status(500).send(err)
         })
+})
+
+// LOGOUT (Authentication)
+// Just logout on the device you are using
+router.post('/authors/logout', auth, async (req, res) => {
+    try {
+        req.author.tokens = req.author.tokens.filter( token => {
+            return token.token !== req.token
+        })
+        await req.author.save()
+
+        res.send()
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
+// LOGOUT FROM ALL DEVICES (wipeout tokens)
+router.post('/authors/logoutAll', auth, async (req, res) => {
+    try {
+        req.author.tokens = []
+        await req.author.save()
+        
+        res.send()
+    } catch (err) {
+        res.status(500).send(err)
+    }
 })
 
 

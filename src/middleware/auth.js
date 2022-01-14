@@ -1,6 +1,11 @@
 const jwt = require('jsonwebtoken')
 const Author = require('../models/author')
 
+// Authentication with JSON Web Tokens
+// This function will be called when the client tries to access a route that includes it as a second argument.
+// For example:
+//             route ->      middleware -> route handler
+// router.get('/authors/me', auth,         async (req, res) => {})
 const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')
@@ -11,7 +16,8 @@ const auth = async (req, res, next) => {
         if (!author) {
             throw new Error() // triggers the catch
         }
-
+        // adding the two values to the 'req' parameter available in the routes
+        req.token = token
         req.author = author
 
         next()
