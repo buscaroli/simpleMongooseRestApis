@@ -4,10 +4,6 @@ const Note = require('../models/note')
 const router = new express.Router()
 
 // CRUD: CREATE
-// HTTPie: 
-//      SUCCESS: http --raw '{"title": "First Note", "text": "This is my first note"}' POST localhost:3000/notes
-//      FAILURE: http --raw '{"title": "First Note"}' POST localhost:3000/notes
-
 
 router.post('/notes', (req, res) => {
     const note = new Note(req.body)

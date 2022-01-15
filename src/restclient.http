@@ -55,7 +55,7 @@ content-type: application/json
 
 GET http://localhost:3000/authors/me HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUxOTg2OGZjOTEzZDIyYjJhZTE3MGQiLCJpYXQiOjE2NDIxODk4OTR9.SJ4QwI4lkh-MPK5cygTH6Xouk_Mlz0xp_bDmoekjYWU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjM0ZjQxMjIyMWZmNmNhMTE4YzUiLCJpYXQiOjE2NDIyNDcxMjN9.kB0u5YiA8WsxRqol63aLXKBB-vuYVwuH3wPPjEuof-U
 
 ### LOGOUT
 POST http://127.0.0.1:3000/authors/logout
@@ -67,3 +67,20 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUxOTg2O
 POST http://127.0.0.1:3000/authors/logoutAll
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUxOTg2OGZjOTEzZDIyYjJhZTE3MGQiLCJpYXQiOjE2NDIxOTA2MTV9.kbDHWk8F4n0j_P7GvCmh9DVNXC18RCKIFqjDmPElxxA
+
+### UPDATE (PATCH) AUTHORIZED USER
+
+PATCH http://127.0.0.1:3000/authors/me 
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjM0ZjQxMjIyMWZmNmNhMTE4YzUiLCJpYXQiOjE2NDIyNDcxMjN9.kB0u5YiA8WsxRqol63aLXKBB-vuYVwuH3wPPjEuof-U
+
+{
+    "email": "melvinNewEmail@email.com"
+}
+
+### DELETE AUTHORIZED AUTHOR
+
+DELETE http://127.0.0.1:3000/authors/me
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjI5NWZlNWI0NWI1YjU2OWE2YjMiLCJpYXQiOjE2NDIyNDY4NTB9.dgD0E9QcS-VnBXK8FVTzsd0GQX6uPCTt2p-V-3uXT1k
+

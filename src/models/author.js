@@ -5,6 +5,7 @@ const validator = require('validator')
 const { validate } = require('./note')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const convertDateFormat = require('../utils/dateFormat.js')
 
 const authorSchema = new Schema({
     name: {
@@ -68,6 +69,13 @@ authorSchema.methods.generateJWToken = async function() {
     await this.save()
 
     return token
+}
+
+authorSchema.methods.getPublicProfile = async function() {
+    stringDate = convertDateFormat(this.joined)
+    
+    let publicProfile = { name: this.name, email: this.email, joined: stringDate }
+    return publicProfile
 }
 
 

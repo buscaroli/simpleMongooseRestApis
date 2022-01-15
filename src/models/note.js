@@ -12,9 +12,9 @@ const noteSchema = new Schema({
         required: true,
         trim: true
     },
-    author: {
-        type: String,
-        trim: true
+    writtenBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     },
     date: {
         type: Date,
