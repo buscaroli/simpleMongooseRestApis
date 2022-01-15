@@ -58,6 +58,7 @@ const authorSchema = new Schema({
     }],
 })
 
+// Virtual field removed as not used
 // authorSchema.virtual('noteList', {
 //     ref: 'Note',
 //     localField: '_id',
@@ -66,9 +67,11 @@ const authorSchema = new Schema({
 
 
 // Virtual Method, callable on an instance of Author
+
+// Generate a JSON Web Token
 authorSchema.methods.generateJWToken = async function() {
     
-    const token = jwt.sign({ _id: this._id.toString() }, 'mypassword')
+    const token = jwt.sign({ _id: this._id.toString() }, process.env.TOKEN_PASS)
     
     this.tokens = this.tokens.concat({ token: token })
     await this.save()
@@ -76,6 +79,7 @@ authorSchema.methods.generateJWToken = async function() {
     return token
 }
 
+// Create a JSON object without the details that should be kept private
 authorSchema.methods.getPublicProfile = async function() {
     stringDate = convertDateFormat(this.joined)
     

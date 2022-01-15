@@ -9,7 +9,7 @@ const Author = require('../models/author')
 const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')
-        const decoded = jwt.verify(token, 'mypassword') // the token contains the _id
+        const decoded = jwt.verify(token, process.env.TOKEN_PASS) // the token contains the _id
         // console.log(decoded)
         const author = await Author.findOne({ _id: decoded._id, 'tokens.token': token })
 

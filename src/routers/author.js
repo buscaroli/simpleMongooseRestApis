@@ -62,8 +62,7 @@ router.post('/authors/logoutAll', auth, async (req, res) => {
 })
 
 
-// HTTPie:
-//      SUCCESS: http GET localhost:3000/authors
+// GET Authorised author's details
 router.get('/authors/me', auth, async (req, res) => {
     res.send(req.author)
 })
