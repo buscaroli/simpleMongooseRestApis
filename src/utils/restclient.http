@@ -66,24 +66,24 @@ content-type: application/json
 
 GET http://localhost:3000/authors/me HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjM0ZjQxMjIyMWZmNmNhMTE4YzUiLCJpYXQiOjE2NDIyNDcxMjN9.kB0u5YiA8WsxRqol63aLXKBB-vuYVwuH3wPPjEuof-U
+Authorization: 
 
 ### LOGOUT
 POST http://127.0.0.1:3000/authors/logout
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUxOTg2OGZjOTEzZDIyYjJhZTE3MGQiLCJpYXQiOjE2NDIxNzUyMDF9.ESl-xcFjuR-iaoZvAlW6THk7FI2-NP4wXwvjoAiv-bA
+Authorization: 
 
 ### LOGOUT EVERYWHERE
 
 POST http://127.0.0.1:3000/authors/logoutAll
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTIwMTd9.ZDZSYtCvs-bsxAxjzR-KQLUupp6Z56JK_UgAC654H3Q
+Authorization: 
 
 ### UPDATE (PATCH) AUTHORIZED USER
 
 PATCH http://127.0.0.1:3000/authors/me 
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjM0ZjQxMjIyMWZmNmNhMTE4YzUiLCJpYXQiOjE2NDIyNDcxMjN9.kB0u5YiA8WsxRqol63aLXKBB-vuYVwuH3wPPjEuof-U
+Authorization: 
 
 {
     "email": "melvinNewEmail@email.com"
@@ -93,12 +93,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjM0Z
 
 DELETE http://127.0.0.1:3000/authors/me
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyZGExN2Q4NTUzYjA5ZGZmMmMwYzEiLCJpYXQiOjE2NDIyNTY5NDB9.G9aHQt6QC2XQcFg-Tg3KaKmv3h4r6AVMfMmyMyeWDXk
+Authorization: 
 
 ### CREATE NOTE (by Melvin)
 POST http://127.0.0.1:3000/notes
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTIwMTd9.ZDZSYtCvs-bsxAxjzR-KQLUupp6Z56JK_UgAC654H3Q
+Authorization: 
 
 {
     "title": "Hi there, it's Melvin",
@@ -109,7 +109,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlO
 ### CREATE NOTE (by Sue)
 POST http://127.0.0.1:3000/notes
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyZGExN2Q4NTUzYjA5ZGZmMmMwYzEiLCJpYXQiOjE2NDIyNTY5NDB9.G9aHQt6QC2XQcFg-Tg3KaKmv3h4r6AVMfMmyMyeWDXk
+Authorization: 
 
 {
     "title": "Hi I am SUSAN",
@@ -122,25 +122,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyZGExN
 
 GET http://127.0.0.1:3000/notes/61e2c510f1ab431a2c040b7d
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTIwMTd9.ZDZSYtCvs-bsxAxjzR-KQLUupp6Z56JK_UgAC654H3Q
+Authorization: 
 
 
 ### READ NOTE by authorised author
 
 GET http://127.0.0.1:3000/notes/61e2bfdb2923a46f735ae936
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkNDQ3MzE0MWZhZWE1YzcyY2UiLCJpYXQiOjE2NDIyNTAxNzd9.6HCSrGU3hervcOR3nWoKXdTl9ybnXMZbunNkYGWpR4w
+Authorization: 
 
 ### READ ALL NOTES BY AUTHORISED AUTHOR
 
 GET http://127.0.0.1:3000/notes
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZjQ3MzE0MWZhZWE1YzcyZDAiLCJpYXQiOjE2NDIyNTE0MTB9.zAjtOmzFYsWUiiFYMfkhnvz4JmEYneTBo7VJIzoqK6M
+Authorization: 
 
 ### PATCH a NOTE by Authorised Author (written by Sue)
 PATCH http://127.0.0.1:3000/notes/61e2c84176e128ccf1e38b00
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZjQ3MzE0MWZhZWE1YzcyZDAiLCJpYXQiOjE2NDIyNTE0MTB9.zAjtOmzFYsWUiiFYMfkhnvz4JmEYneTBo7VJIzoqK6M
+Authorization: 
 
 {
     "text": "blah blah blah"
@@ -150,7 +150,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZ
 
 PATCH http://127.0.0.1:3000/notes/61e2c84176e128ccf1e38b00
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTIwMTd9.ZDZSYtCvs-bsxAxjzR-KQLUupp6Z56JK_UgAC654H3Q
+Authorization: 
 
 {
     "text": "This shouldn't!"
@@ -159,7 +159,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlO
 ### PATCH a non-existing NOTE by Authorised Author (written by Sue)
 PATCH http://127.0.0.1:3000/notes/61e2c84176e128ccf1e38b01
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZjQ3MzE0MWZhZWE1YzcyZDAiLCJpYXQiOjE2NDIyNTE0MTB9.zAjtOmzFYsWUiiFYMfkhnvz4JmEYneTBo7VJIzoqK6M
+Authorization: 
 
 {
     "text": "blah blah blah"
@@ -168,4 +168,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZ
 ### DELETE NOTE BY AUTHORISED AUTHOR
 DELETE http://127.0.0.1:3000/notes/61e2d7beeb61935ee02d42e9
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTY0NjR9.TliQBBkpTvpnYdO49kwCOSNBlsJ5D79pbHWyJ8G5PFI
+Authorization: 
