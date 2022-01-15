@@ -93,7 +93,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjM0Z
 
 DELETE http://127.0.0.1:3000/authors/me
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkNDQ3MzE0MWZhZWE1YzcyY2UiLCJpYXQiOjE2NDIyNTAxNzd9.6HCSrGU3hervcOR3nWoKXdTl9ybnXMZbunNkYGWpR4w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyZGExN2Q4NTUzYjA5ZGZmMmMwYzEiLCJpYXQiOjE2NDIyNTY5NDB9.G9aHQt6QC2XQcFg-Tg3KaKmv3h4r6AVMfMmyMyeWDXk
 
 ### CREATE NOTE (by Melvin)
 POST http://127.0.0.1:3000/notes
@@ -109,11 +109,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlO
 ### CREATE NOTE (by Sue)
 POST http://127.0.0.1:3000/notes
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZjQ3MzE0MWZhZWE1YzcyZDAiLCJpYXQiOjE2NDIyNTE0MTB9.zAjtOmzFYsWUiiFYMfkhnvz4JmEYneTBo7VJIzoqK6M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyZGExN2Q4NTUzYjA5ZGZmMmMwYzEiLCJpYXQiOjE2NDIyNTY5NDB9.G9aHQt6QC2XQcFg-Tg3KaKmv3h4r6AVMfMmyMyeWDXk
 
 {
-    "title": "Hi this is Susan AGAIN!",
-    "text": "This is another note from me, Sue!",
+    "title": "Hi I am SUSAN",
+    "text": "Delete me",
     "writtenBy": "61e2bedf473141faea5c72d0"
 }
 

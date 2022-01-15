@@ -6,6 +6,7 @@ const { validate } = require('./note')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const convertDateFormat = require('../utils/dateFormat.js')
+const Note = require('./note')
 
 const authorSchema = new Schema({
     name: {
@@ -110,6 +111,13 @@ authorSchema.pre('save', async function(next) {
     }
 
     next() // we need next because this is an async function
+})
+
+// Delete author's notes if author is deleted
+authorSchema.pre('remove', async function (next) {
+    await Note.deleteMany({ writtenBy: this._id})
+
+    next()
 })
 
 const Author = mongoose.model('Author', authorSchema)
