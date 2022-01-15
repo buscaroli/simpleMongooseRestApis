@@ -1,0 +1,171 @@
+
+POST http://127.0.0.1:3000/authors HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Melvin",
+    "email": "melvin@email.com",
+    "password": "melvin123",
+    "age": "62"
+}
+
+###
+
+POST http://127.0.0.1:3000/authors HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Sue",
+    "email": "sue@email.com",
+    "password": "sue123",
+    "age": "43"
+}
+
+###
+
+POST http://127.0.0.1:3000/authors HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John",
+    "email": "john@email.com",
+    "password": "john123",
+    "age": "23"
+}
+
+### LOGIN SUCCESS (by Melvin)
+POST http://127.0.0.1:3000/authors/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "melvin@email.com",
+    "password": "melvin123"
+}
+
+### LOGIN SUCCESS (by Sue)
+POST http://127.0.0.1:3000/authors/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "sue@email.com",
+    "password": "sue123"
+}
+
+
+
+### LOGIN FAILURE
+POST http://127.0.0.1:3000/authors/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "melvin@email.com",
+    "password": "WRONG_PASSWORD"
+}
+
+### GET PROFILE OF AUTHENTICATED USER
+
+GET http://localhost:3000/authors/me HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjM0ZjQxMjIyMWZmNmNhMTE4YzUiLCJpYXQiOjE2NDIyNDcxMjN9.kB0u5YiA8WsxRqol63aLXKBB-vuYVwuH3wPPjEuof-U
+
+### LOGOUT
+POST http://127.0.0.1:3000/authors/logout
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUxOTg2OGZjOTEzZDIyYjJhZTE3MGQiLCJpYXQiOjE2NDIxNzUyMDF9.ESl-xcFjuR-iaoZvAlW6THk7FI2-NP4wXwvjoAiv-bA
+
+### LOGOUT EVERYWHERE
+
+POST http://127.0.0.1:3000/authors/logoutAll
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTIwMTd9.ZDZSYtCvs-bsxAxjzR-KQLUupp6Z56JK_UgAC654H3Q
+
+### UPDATE (PATCH) AUTHORIZED USER
+
+PATCH http://127.0.0.1:3000/authors/me 
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYjM0ZjQxMjIyMWZmNmNhMTE4YzUiLCJpYXQiOjE2NDIyNDcxMjN9.kB0u5YiA8WsxRqol63aLXKBB-vuYVwuH3wPPjEuof-U
+
+{
+    "email": "melvinNewEmail@email.com"
+}
+
+### DELETE AUTHORIZED AUTHOR
+
+DELETE http://127.0.0.1:3000/authors/me
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkNDQ3MzE0MWZhZWE1YzcyY2UiLCJpYXQiOjE2NDIyNTAxNzd9.6HCSrGU3hervcOR3nWoKXdTl9ybnXMZbunNkYGWpR4w
+
+### CREATE NOTE (by Melvin)
+POST http://127.0.0.1:3000/notes
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTIwMTd9.ZDZSYtCvs-bsxAxjzR-KQLUupp6Z56JK_UgAC654H3Q
+
+{
+    "title": "Hi there, it's Melvin",
+    "text": "Another note to be deleted",
+    "writtenBy": "61e2c6e9f1ab431a2c040b95"
+}
+
+### CREATE NOTE (by Sue)
+POST http://127.0.0.1:3000/notes
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZjQ3MzE0MWZhZWE1YzcyZDAiLCJpYXQiOjE2NDIyNTE0MTB9.zAjtOmzFYsWUiiFYMfkhnvz4JmEYneTBo7VJIzoqK6M
+
+{
+    "title": "Hi this is Susan AGAIN!",
+    "text": "This is another note from me, Sue!",
+    "writtenBy": "61e2bedf473141faea5c72d0"
+}
+
+
+### READ NOTE BY UNAUTORISED AUTHOR
+
+GET http://127.0.0.1:3000/notes/61e2c510f1ab431a2c040b7d
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTIwMTd9.ZDZSYtCvs-bsxAxjzR-KQLUupp6Z56JK_UgAC654H3Q
+
+
+### READ NOTE by authorised author
+
+GET http://127.0.0.1:3000/notes/61e2bfdb2923a46f735ae936
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkNDQ3MzE0MWZhZWE1YzcyY2UiLCJpYXQiOjE2NDIyNTAxNzd9.6HCSrGU3hervcOR3nWoKXdTl9ybnXMZbunNkYGWpR4w
+
+### READ ALL NOTES BY AUTHORISED AUTHOR
+
+GET http://127.0.0.1:3000/notes
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZjQ3MzE0MWZhZWE1YzcyZDAiLCJpYXQiOjE2NDIyNTE0MTB9.zAjtOmzFYsWUiiFYMfkhnvz4JmEYneTBo7VJIzoqK6M
+
+### PATCH a NOTE by Authorised Author (written by Sue)
+PATCH http://127.0.0.1:3000/notes/61e2c84176e128ccf1e38b00
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZjQ3MzE0MWZhZWE1YzcyZDAiLCJpYXQiOjE2NDIyNTE0MTB9.zAjtOmzFYsWUiiFYMfkhnvz4JmEYneTBo7VJIzoqK6M
+
+{
+    "text": "blah blah blah"
+}
+
+### PATCH Note by Unauthorised Author (written by Sue, Melvin's token)
+
+PATCH http://127.0.0.1:3000/notes/61e2c84176e128ccf1e38b00
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTIwMTd9.ZDZSYtCvs-bsxAxjzR-KQLUupp6Z56JK_UgAC654H3Q
+
+{
+    "text": "This shouldn't!"
+}
+
+### PATCH a non-existing NOTE by Authorised Author (written by Sue)
+PATCH http://127.0.0.1:3000/notes/61e2c84176e128ccf1e38b01
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYmVkZjQ3MzE0MWZhZWE1YzcyZDAiLCJpYXQiOjE2NDIyNTE0MTB9.zAjtOmzFYsWUiiFYMfkhnvz4JmEYneTBo7VJIzoqK6M
+
+{
+    "text": "blah blah blah"
+}
+
+### DELETE NOTE BY AUTHORISED AUTHOR
+DELETE http://127.0.0.1:3000/notes/61e2d7beeb61935ee02d42e9
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUyYzZlOWYxYWI0MzFhMmMwNDBiOTUiLCJpYXQiOjE2NDIyNTY0NjR9.TliQBBkpTvpnYdO49kwCOSNBlsJ5D79pbHWyJ8G5PFI

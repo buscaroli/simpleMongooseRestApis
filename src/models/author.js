@@ -54,11 +54,15 @@ const authorSchema = new Schema({
             type: String,
             required: true
         }
-    }]
+    }],
 })
-// without the following plugin the 'unique' field of Mongoose's Schema
-// is ignored as per Jan 2022
-// authorSchema.plugin(uniqueValidator)
+
+// authorSchema.virtual('noteList', {
+//     ref: 'Note',
+//     localField: '_id',
+//     foreignField: 'writtenBy'
+// })
+
 
 // Virtual Method, callable on an instance of Author
 authorSchema.methods.generateJWToken = async function() {

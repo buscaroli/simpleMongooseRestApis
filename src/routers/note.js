@@ -1,27 +1,30 @@
 const express = require('express')
 const Note = require('../models/note')
+const auth = require('../middleware/auth')
 
 const router = new express.Router()
 
 // CRUD: CREATE
-
-router.post('/notes', (req, res) => {
-    const note = new Note(req.body)
+router.post('/notes', auth, (req, res) => {
+    const note = new Note({
+        ...req.body,
+        writtenBy: req.author._id
+    })
 
     note.save()
         .then(() => {
-            res.send(note)
+            res.status(201).send(note)
         })
         .catch((err) => {
             res.status(500).send(err)
         })
 })
 
-// CRUD: READ all notes
-// HTTPie:
-//      http GET localhost:3000/notes 
-router.get('/notes', (req, res) => {
-    Note.find({})
+// CRUD: READ all notes by authorised author
+router.get('/notes', auth, (req, res) => {
+    const writtenBy = req.author._id
+    
+    Note.find({ writtenBy })
         .then(notes => {
             res.send(notes)
         })
@@ -30,16 +33,13 @@ router.get('/notes', (req, res) => {
         })
 })
 
-// CRUD: READ one
-// HTTPie:
-//      SUCCESS: http GET localhost:3000/notes/61dec21f9da8ad3e85a518b3D (<- id from the database)
-//      FAILURE: http GET localhost:3000/notes/61dec21f9da8ad3e85a518b3a (last char changed)
-//      FAILURE: http GET localhost:3000/notes/12345
 
-router.get('/notes/:id', (req, res) => {
+// CRUD: READ One Note from authorized author
+router.get('/notes/:id', auth, (req, res) => {
     const _id = req.params.id
+    const writtenBy = req.author._id
     
-    Note.findById({_id})
+    Note.findOne({ _id, writtenBy })
     .then(note => {
         if (!note) {
             return res.status(404).send()
@@ -52,16 +52,11 @@ router.get('/notes/:id', (req, res) => {
 })
 
 // CRUD: UPDATE one
-// HTTPie:
-//      SUCCESS: http --raw  '{"title": "Updated Note", "text": "This is my Updated note"}' 
-//          PATCH localhost:3000/notes/61dec26ccf82954c103f16f1 )<- (id from database)
-//      FAILURE: http --raw  '{"title": "Updated Note", "text": "This is my Updated note"}' 
-//          PATCH localhost:3000/notes/61dec26ccf82954c103f16f2 (last char changed, 404 Not Found)
-//      FAILURE: http --raw  '{"title": "Updated Note", "text": "This is my Updated note"}' 
-//          PATCH localhost:3000/notes/12345  (400 Bad Request)
-
-router.patch('/notes/:id', async (req, res) => {
+router.patch('/notes/:id', auth, async (req, res) => {
     const _id = req.params.id
+    const writtenBy = req.author._id
+    console.log(`noteID: ${_id}`)
+    console.log(`writtenBy: ${writtenBy}`)
 
     const updates =  Object.keys(req.body)
     const allowedUpdates = ['title', 'text', 'read']
@@ -74,15 +69,15 @@ router.patch('/notes/:id', async (req, res) => {
     }
 
     try {
-        const note = await Note.findById(_id)
-
-        updates.forEach(update => note[update] = req.body[update])
-
-        await note.save()
-
+        const note = await Note.findOne({ _id, writtenBy })
+        // console.log(`note: ${note.title} author: ${note.author}`)
+        
         if (!note) {
             return res.status(404).send()
         }
+
+        updates.forEach(update => note[update] = req.body[update])
+        await note.save()
         res.send(note)
 
     } catch (err) {
@@ -90,31 +85,13 @@ router.patch('/notes/:id', async (req, res) => {
     }
 })
 
-// !!!! findByIdAndUpdate wouldn't work with middleware if needed !!!!
-//
-// router.patch('/notes/:id', (req, res) => {
-//     const _id = req.params.id
 
-//     Note.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
-//         .then(note => {
-//             if (!note) {
-//                 return res.status(404).send()
-//             }
-//             res.send(note)
-//         })
-//         .catch(err => {
-//             res.status(400).send(err)
-//         })
-// })
+// CRUD: DELETE one note by Authorised Author
+router.delete('/notes/:id', auth, (req, res) => {
+    const _id = req.params.id
+    const writtenBy = req.author._id
 
-// CRUD: DELETE one note
-//      SUCCESS: http DELETE localhost:3000/notes/61dec21f9da8ad3e85a518b3 )<- id from database)
-//      FAILURE: Do the above again for a 404
-//      FAILURE: http DELETE localhost:3000/notes/12345 
-router.delete('/notes/:id', (req, res) => {
-    let _id = req.params.id 
-
-    Note.findByIdAndDelete({_id})
+    Note.findByIdAndDelete({ _id, writtenBy })
         .then(note => {
             if (!note) {
                 return res.status(404).send()

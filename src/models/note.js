@@ -14,7 +14,8 @@ const noteSchema = new Schema({
     },
     writtenBy: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'Author'
     },
     date: {
         type: Date,
